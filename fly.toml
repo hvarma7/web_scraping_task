@@ -1,0 +1,34 @@
+# fly.toml app configuration file generated for web-scraping-task on 2024-07-18T21:14:39+05:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'web-scraping-task'
+primary_region = 'sin'
+console_command = '/rails/bin/rails console'
+
+[build]
+
+[env]
+#  DATABASE_URL = 'sqlite3:///data/production.sqlite3'
+
+[[mounts]]
+  source = 'data'
+  destination = '/data'
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[[statics]]
+  guest_path = '/rails/public'
+  url_prefix = '/'
